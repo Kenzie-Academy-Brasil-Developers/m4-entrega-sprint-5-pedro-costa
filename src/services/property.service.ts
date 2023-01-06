@@ -16,8 +16,6 @@ export const createPropertyService = async (body: IPropertyRequest) => {
     zipCode: body.address.zipCode,
   });
 
-  //perguntar como passar 2 paramntros no find
-
   if (findAddress) {
     throw new AppError("propty already exist ", 409);
   }

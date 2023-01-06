@@ -1,12 +1,16 @@
 import { Request, Response } from "express";
 
-import { createScheduleService } from "../services/schedule.service";
+import { createScheduleService, getSchedulesService } from "../services/schedule.service";
 
  export const createScheduleController = async (req:Request, res: Response) => {
-  const createSchedule = await createScheduleService(req.body);
-    return res.status(201);
+  const schedule =  await createScheduleService(req.body, req.user.id);
+    return res.status(201).json(schedule);
  }
 
 
 
 
+ export const getScheduleController = async (req: Request, res: Response) => {
+   const getCategories = await getSchedulesService();
+   return res.status(200).json(getCategories);
+ };

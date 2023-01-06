@@ -11,6 +11,7 @@ export const createpropertyShape = yup.object().shape({
     city: yup.string().required( "is required"),
     state: yup.string().max(2).required("is required"),
     number: yup.string()
+    
   })
 }).noUnknown(true).strict();
 
