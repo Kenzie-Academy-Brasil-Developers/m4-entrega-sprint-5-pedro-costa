@@ -1,5 +1,5 @@
 import { NextFunction, Request, Response } from "express";
-import { AnySchema, SchemaOf} from "yup";
+import { AnySchema, SchemaOf } from "yup";
 import { AppError } from "../errors";
 import jwt from "jsonwebtoken";
 import { compare } from "bcryptjs";
@@ -15,12 +15,9 @@ export const createUserMiddleware =
         stripUnknown: true,
         abortEarly: false,
       });
-    } catch (error:any) {
+    } catch (error: any) {
       throw new AppError(error.errors, 400);
     }
-   
-
-
 
     return next();
   };
@@ -53,19 +50,19 @@ export const LoginUserMiddleware = async (
   resp: Response,
   next: NextFunction
 ) => {
-  try {
-    const userRepo = AppDataSource.getRepository(Users);
-    const findUser = await userRepo.findOneBy({ email: req.body.email });
-    const passwordMatch = await compare(req.body.password, findUser!.password);
+  const userRepo = AppDataSource.getRepository(Users);
+  const findUser = await userRepo.findOneBy({ email: req.body.email });
+  const passwordMatch = await compare(req.body.password, findUser!.password);
 
-    if (!passwordMatch) {
-      throw new AppError("email or password is  invalid", 403);
-    }
+  if (!findUser?.isActive) {
+    throw new AppError("user is inactive ", 400);
+  }
 
-    return next();
-  } catch (error) {
+  if (!passwordMatch) {
     throw new AppError("email or password is  invalid", 403);
   }
+
+  return next();
 };
 
 export const updateUserMiddleware =
@@ -93,7 +90,6 @@ export const isAdmValidationMiddleware = async (
   const userRepo = AppDataSource.getRepository(Users);
   const findUser = await userRepo.findOneBy({ id: req.user.id });
 
-  
   if (!findUser?.isAdm) {
     throw new AppError("just adm user is allowed", 403);
   }

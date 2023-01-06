@@ -1,4 +1,5 @@
-import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
+import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from "typeorm";
+import { Properties } from "./properties.entity";
 
 @Entity("categories")
 export class  Categories {
@@ -7,4 +8,7 @@ export class  Categories {
 
   @Column({unique: true})
   name: string;
+
+  @OneToMany(() => Properties, (property) => property.category)
+  properties:Properties[];
 }

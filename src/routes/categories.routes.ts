@@ -1,16 +1,28 @@
 import { Router } from "express";
-import { createCategoryController, getCategoriesController, getOneCategoryController } from "../controllers/category.controllers";
-import { isAdmValidationMiddleware, validateUserMiddleware } from "../midllewares/user.middlewares";
+import {
+  createCategoryController,
+  getCategoriesController,
+  getPropertiesCategoryController,
+} from "../controllers/category.controllers";
+import {
+  isAdmValidationMiddleware,
+  validateUserMiddleware,
+} from "../midllewares/user.middlewares";
 
 const categoryRouter = Router();
 
+categoryRouter.post(
+  "/categories",
+  validateUserMiddleware,
+  isAdmValidationMiddleware,
+  createCategoryController
+);
 
-categoryRouter.post("/categories", validateUserMiddleware, isAdmValidationMiddleware, createCategoryController );
+categoryRouter.get("/categories", getCategoriesController);
 
-categoryRouter.get("/categories",  getCategoriesController );
+categoryRouter.get(
+  "/categories/:id/properties",
+  getPropertiesCategoryController
+);
 
-categoryRouter.get("/categories/:id",  getOneCategoryController);
-
-
-
-export default categoryRouter
+export default categoryRouter;

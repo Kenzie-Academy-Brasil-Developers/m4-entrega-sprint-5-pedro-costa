@@ -31,7 +31,7 @@ class AppError extends Error {
     return res.status(401).json({ message: err.errors });
   }
 
- 
+ return res.status(500).json({ message: "internal server error"})
 };
 
 export { AppError, errorHandler };

@@ -3,15 +3,15 @@ import {
   CreateDateColumn,
   Entity,
   JoinColumn,
-  JoinTable,
-  ManyToMany,
   ManyToOne,
+  OneToMany,
   OneToOne,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from "typeorm";
 import { Addresses } from "./addresses.entity";
 import { Categories } from "./categories.entity";
+import { Schedules_users_properties } from "./schedules_users_properties";
 import { Users } from "./users.entity";
 
 @Entity("properties")
@@ -34,24 +34,16 @@ export class Properties {
   @UpdateDateColumn()
   updatedAt: Date;
 
-  @OneToOne(() => Addresses, "uuid")
+  @OneToOne(() => Addresses)
   @JoinColumn()
-  addresseId: Addresses;
+  address: Addresses;
 
-  @ManyToOne(() => Categories)
-  categoryId: Categories;
+  @ManyToOne(() => Categories, (category) => category.id)
+  category: Categories;
 
-  @ManyToMany(() => Users, (users) => users.schedules)
-  @JoinTable({
-    name: "schedules_users_properties",
-    joinColumn: {
-      name: "propertyId",
-      referencedColumnName: "id",
-    },
-    inverseJoinColumn: {
-      name: "userId",
-      referencedColumnName: "id",
-    },
-  })
-  schedules: Users[];
+
+  @OneToMany(() => Schedules_users_properties, (schedules) => schedules.propertyId)
+  schedules: Users[]
+
+ 
 }

@@ -11,10 +11,10 @@ export class  Schedules_users_properties {
   @Column({type: "time"})
   hour: string;
 
-  @PrimaryColumn("uuid")
+  @PrimaryColumn()
   propertyId: string;
 
-  @PrimaryColumn("uuid")
+  @PrimaryColumn()
   userId: string;
 
 }

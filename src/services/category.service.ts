@@ -1,5 +1,6 @@
 import AppDataSource from "../data-source";
 import { Categories } from "../entities/categories.entity";
+import { Properties } from "../entities/properties.entity";
 import { AppError } from "../errors";
 import { ICategoryRequest } from "../interfaces/categories";
 
@@ -21,21 +22,18 @@ export const getCategoriesService = async () => {
   return await categoryRepo.find();
 };
 
+export const getPropertiesCategoryService = async (id: string) => {
+  const categoryRepo = AppDataSource.getRepository(Categories);
 
+  const findCategory = await categoryRepo.findOneBy({ id });
+  if (!findCategory) {
+    throw new AppError("category not exist", 404);
+  }
 
+  const findPropertiesCategory = await categoryRepo.findOne({
+    where: { id },
+    relations: { properties: true },
+  });
 
-export const getOneCategoryService = async (categoryId:string) => {
-   try {
-    const categoryRepo = AppDataSource.getRepository(Categories);
-  
- 
-  const findCategory = await categoryRepo.findOneBy({ id: categoryId });
-
-
-    return findCategory
-   } catch (error) {
-    throw new AppError("user not found", 404);
-   }
-    
-   
-  };
+  return findPropertiesCategory;
+};

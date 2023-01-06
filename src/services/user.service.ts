@@ -41,12 +41,12 @@ export const loginUserService = async (body: IUserLogin): Promise<object> => {
   const userRepo = AppDataSource.getRepository(Users);
 
   const findUser = await userRepo.findOneBy({ email: body.email });
- 
+
   if (!findUser) {
     throw new AppError("email or password is incorrect", 401);
   }
 
-  const { email, isAdm, id } = findUser!;
+  const {isAdm, id } = findUser!;
 
   const createtoken = jwt.sign({ isAdm }, process.env.SECRET_KEY as string, {
     expiresIn: "24h",
