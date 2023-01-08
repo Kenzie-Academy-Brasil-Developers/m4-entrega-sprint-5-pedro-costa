@@ -1,5 +1,4 @@
-import { And } from "typeorm";
-import { create } from "yup/lib/Reference";
+
 import AppDataSource from "../data-source";
 import { Properties } from "../entities/properties.entity";
 import { Schedules_users_properties } from "../entities/schedules_users_properties";
