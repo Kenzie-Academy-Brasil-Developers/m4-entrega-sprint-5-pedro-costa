@@ -12,7 +12,6 @@ import {
 import { Addresses } from "./addresses.entity";
 import { Categories } from "./categories.entity";
 import { Schedules_users_properties } from "./schedules_users_properties";
-import { Users } from "./users.entity";
 
 @Entity("properties")
 export class Properties {
@@ -41,9 +40,6 @@ export class Properties {
   @ManyToOne(() => Categories, (category) => category.id)
   category: Categories;
 
-
-  @OneToMany(() => Schedules_users_properties, (schedules) => schedules.propertyId)
-  schedules: Users[]
-
- 
+  @OneToMany(() => Schedules_users_properties,(schedules) => schedules.property)
+  schedules: Schedules_users_properties[];
 }

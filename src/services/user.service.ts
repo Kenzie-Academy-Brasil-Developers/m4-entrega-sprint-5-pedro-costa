@@ -46,7 +46,7 @@ export const loginUserService = async (body: IUserLogin): Promise<object> => {
     throw new AppError("email or password is incorrect", 401);
   }
 
-  const {isAdm, id } = findUser!;
+  const { isAdm, id } = findUser!;
 
   const createtoken = jwt.sign({ isAdm }, process.env.SECRET_KEY as string, {
     expiresIn: "24h",
@@ -71,7 +71,7 @@ export const patchUserService = async (
     throw new AppError("user no exist", 404);
   }
 
-  const newUserData = await userRepo.update(userId, data);
+  await userRepo.update(userId, data);
 
   const { password: newPassword, ...updatedUser } = data;
 
@@ -96,7 +96,7 @@ export const deleteUserService = async (userid: string) => {
 
   findUser!.isActive = false;
 
-  const deleteuser = await userRepo.save(findUser);
+  await userRepo.save(findUser);
 
   return {};
 };

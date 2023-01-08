@@ -1,4 +1,3 @@
-import { And, PersistedEntityNotFoundError } from "typeorm";
 import AppDataSource from "../data-source";
 import { Addresses } from "../entities/addresses.entity";
 import { Categories } from "../entities/categories.entity";
@@ -38,9 +37,6 @@ export const createPropertyService = async (body: IPropertyRequest) => {
   const createProperty = propertyRepo.create(propertyResponse);
 
   return await propertyRepo.save(createProperty);
-
-  {
-  }
 };
 
 export const getPropertiesService = async () => {

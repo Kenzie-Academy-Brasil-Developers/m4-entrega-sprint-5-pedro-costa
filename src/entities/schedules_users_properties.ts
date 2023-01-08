@@ -1,20 +1,21 @@
-import { Column, Entity, PrimaryColumn, PrimaryGeneratedColumn } from "typeorm";
+import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
+import { Properties } from "./properties.entity";
+import { Users } from "./users.entity";
 
 @Entity("schedules_users_properties")
-export class  Schedules_users_properties {
+export class Schedules_users_properties {
   @PrimaryGeneratedColumn("uuid")
   id: string;
 
-  @Column({type: Date})
+  @Column({ type: "date" })
   date: string;
 
-  @Column({type: "time"})
+  @Column({ type: "time" })
   hour: string;
 
-  @PrimaryColumn()
-  propertyId: string;
+  @ManyToOne(() => Properties, (property) => property.schedules)
+  property: Properties;
 
-  @PrimaryColumn()
-  userId: string;
-
+  @ManyToOne(() => Users, (user) => user.schedules)
+  user: Users;
 }

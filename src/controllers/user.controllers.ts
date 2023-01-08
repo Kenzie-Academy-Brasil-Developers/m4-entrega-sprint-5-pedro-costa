@@ -1,5 +1,4 @@
 import { Request, Response } from "express";
-// import { IUser } from "../interfaces/users";
 import {
   createUserService,
   deleteUserService,
@@ -31,7 +30,7 @@ export const patchUserController = async (req: Request, res: Response) => {
 };
 
 export const deleteUserController = async (req: Request, res: Response) => {
-  const loginUser = await deleteUserService(req.params.id);
+  await deleteUserService(req.params.id);
 
   res.status(204).send();
 };

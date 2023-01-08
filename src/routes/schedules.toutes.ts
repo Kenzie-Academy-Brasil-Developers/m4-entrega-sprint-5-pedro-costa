@@ -4,7 +4,10 @@ import {
   getScheduleController,
 } from "../controllers/schedule.controller";
 import { createScheduleMiddleware } from "../midllewares/schedule.middleware";
-import { validateUserMiddleware } from "../midllewares/user.middlewares";
+import {
+  isAdmValidationMiddleware,
+  validateUserMiddleware,
+} from "../midllewares/user.middlewares";
 import { createScheduleShape } from "../schemas/schedule.schema";
 
 export const scheduleRouter = Router();
@@ -15,4 +18,9 @@ scheduleRouter.post(
   createScheduleMiddleware(createScheduleShape),
   createScheduleController
 );
-scheduleRouter.get("/schedules", getScheduleController);
+scheduleRouter.get(
+  "/schedules/properties/:id",
+  validateUserMiddleware,
+  isAdmValidationMiddleware,
+  getScheduleController
+);

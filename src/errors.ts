@@ -16,22 +16,20 @@ class AppError extends Error {
   }
 }
 
- const errorHandler = (
+const errorHandler = (
   err: ErrorRequestHandler,
   req: Request,
   res: Response,
   next: NextFunction
 ) => {
-  
   if (err instanceof AppError) {
     return res.status(err.statusCode).json(err.response);
   }
   if (err instanceof ValidationError) {
-    
     return res.status(401).json({ message: err.errors });
   }
 
- return res.status(500).json({ message: "internal server error"})
+  return res.status(500).json({ message: "internal server error" });
 };
 
 export { AppError, errorHandler };

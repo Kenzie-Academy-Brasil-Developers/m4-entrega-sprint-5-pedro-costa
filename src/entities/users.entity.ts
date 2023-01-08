@@ -10,11 +10,10 @@ import {
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from "typeorm";
-import { Properties } from "./properties.entity";
 import { Schedules_users_properties } from "./schedules_users_properties";
 
 @Entity("users")
-export class  Users {
+export class Users {
   @PrimaryGeneratedColumn("uuid")
   id: string;
 
@@ -45,6 +44,6 @@ export class  Users {
     this.password = hashSync(this.password, 10);
   }
 
-  @OneToMany(() => Schedules_users_properties, (schedules) => schedules.userId)
-  schedules: Properties[];
+  @OneToMany(() => Schedules_users_properties, (schedules) => schedules.user)
+  schedules: Schedules_users_properties[];
 }

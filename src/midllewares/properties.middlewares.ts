@@ -7,7 +7,7 @@ export const createPropertyMiddleware =
   (serializer: SchemaOf<IPropertyRequest>) =>
   async (req: Request, resp: Response, next: NextFunction) => {
     try {
-      const validated = await serializer.validate(req.body, {
+      await serializer.validate(req.body, {
         stripUnknown: true,
         abortEarly: false,
       });
